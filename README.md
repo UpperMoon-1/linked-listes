@@ -1,1 +1,1 @@
-Signle and double linked listes 
+single and double linked lists
