@@ -1,0 +1,65 @@
+NODE* sll_search(SLL *sllp, char *name) {
+	NODE *r = NULL;
+	NODE *np = sllp->start;
+	while (np != NULL) {
+		if (strcmp(np->data.name, name) == 0) {
+			r = np;
+			break;
+		} else {
+			np = np->next;
+		}
+	}
+	return r;
+// your code
+}
+
+void sll_insert(SLL *sllp, char *name, float score) {
+// your code
+	NODE *np = (NODE*) malloc(sizeof(NODE)); //creates a node
+	strcpy(np->data.name, name);
+	np->data.score = score;
+	np->next = NULL;
+
+	NODE *prev = NULL;
+	NODE *p = sllp->start;
+	while (p != NULL && strcmp(p->data.name, name) <= 0) {
+		prev = p;
+		p = p->next;
+	}
+	if (prev == NULL) {
+		sllp->start = np;
+		np->next = p;
+	} else {
+		prev->next = np;
+		np->next = p;
+	}
+	sllp->length++;
+
+}
+
+int sll_delete(SLL *sllp, char *name) {
+// your code
+	if (sll_search(sllp, name) != NULL) {
+		NODE *p = sllp->start;
+		NODE *prev = NULL;
+		while (strcmp(p->data.name, name) != 0) {
+			prev = p;
+			p = p->next;
+
+		}
+		if (prev == NULL) { //delete the first item
+			sllp->start = p->next;
+		} else if (p->next == NULL) { //last item
+			prev->next = NULL;
+		} else { //in the middle
+			prev->next = p->next;
+
+		}
+		free(p);
+		sllp->length--;
+
+		return 1;
+	}
+
+	return 0;
+}
